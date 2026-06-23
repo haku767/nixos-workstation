@@ -43,7 +43,6 @@
   };
 
   # --- ZFS & Ephemeral Root ---
-  boot.zfs.requestEncryptionCredentials = true;
   
   # --- ZFS Networking Fix ---
   networking.hostId = "8425e349"; # Randomly generated 8-character hex string
