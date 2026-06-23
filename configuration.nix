@@ -58,6 +58,8 @@
     '';
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   # --- Hardware Config: Intel & Nvidia ---
   hardware.cpu.intel.updateMicrocode = true;
 
