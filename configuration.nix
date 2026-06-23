@@ -22,10 +22,6 @@
   };
   
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  boot.supportedFilesystems = [ "zfs" ];
   
   # Use the default kernel instead of _latest to ensure ZFS compatibility
   boot.kernelPackages = pkgs.linuxPackages;
