@@ -28,9 +28,25 @@
   # --- ZFS & Ephemeral Root ---
   boot.zfs.requestEncryptionCredentials = true;
   
-  boot.initrd.postDeviceCommands = pkgs.lib.mkAfter ''
-    zfs rollback -r rpool/local/root@blank
-  '';
+  # --- ZFS Networking Fix ---
+  networking.hostId = "8425e349"; # Randomly generated 8-character hex string
+
+  # --- Impermanence Boot Fix ---
+  fileSystems."/persist".neededForBoot = true;
+
+  # --- ZFS Ephemeral Root Rollback (Systemd Stage 1) ---
+  boot.initrd.systemd.services.rollback = {
+    description = "Rollback ZFS datasets to a pristine state";
+    wantedBy = [ "initrd.target" ];
+    after = [ "zfs-import.target" ];
+    before = [ "sysroot.mount" ];
+    path = with pkgs; [ zfs ];
+    unitConfig.DefaultDependencies = "no";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      zfs rollback -r rpool/local/root@blank
+    '';
+  };
 
   # --- Hardware Config: Intel & Nvidia ---
   hardware.cpu.intel.updateMicrocode = true;
