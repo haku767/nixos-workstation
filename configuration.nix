@@ -25,6 +25,16 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # --- Keyboard Layout & Localization ---
+  # Ensure German layout (without dead keys) during boot (LUKS prompt) and in TTYs
+  console.keyMap = "de-latin1-nodeadkeys";
+
+  # Ensure German layout (without dead keys) in X11 and Wayland sessions
+  services.xserver.xkb = {
+    layout = "de";
+    variant = "nodeadkeys";
+  };
+
   # --- ZFS & Ephemeral Root ---
   boot.zfs.requestEncryptionCredentials = true;
   
