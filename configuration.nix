@@ -12,16 +12,11 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # --- Bootloader & Kernel ---
-  boot.loader.grub = {
-    enable = true;
-    efiSupport = true;
-    efiInstallAsRemovable = false;
-    device = "nodev";
-    zfsSupport = true;
-    enableCryptodisk = true;
-  };
-  
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.kernelPackages = pkgs.linuxPackages;
   
   # Use the default kernel instead of _latest to ensure ZFS compatibility
   boot.kernelPackages = pkgs.linuxPackages;
