@@ -25,6 +25,17 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  boot.supportedFilesystems = [ "zfs" ];
+  
+  # Use the default kernel instead of _latest to ensure ZFS compatibility
+  boot.kernelPackages = pkgs.linuxPackages;
+
+  # --- ZFS & Ephemeral Root ---
+  boot.zfs.requestEncryptionCredentials = true;
+  
+  # Fix the evaluation warning from the 26.11 NixOS changes
+  boot.zfs.forceImportRoot = false;
+
   # --- Keyboard Layout & Localization ---
   # Ensure German layout (without dead keys) during boot (LUKS prompt) and in TTYs
   console.keyMap = "de-latin1-nodeadkeys";
@@ -119,5 +130,5 @@
     };
   };
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
 }
