@@ -17,9 +17,6 @@
   
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelPackages = pkgs.linuxPackages;
-  
-  # Use the default kernel instead of _latest to ensure ZFS compatibility
-  boot.kernelPackages = pkgs.linuxPackages;
 
   # --- ZFS & Ephemeral Root ---
   boot.zfs.requestEncryptionCredentials = true;
